@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout onlaunch="launch">
-    <row weight="1">
+    <row weight="wrap">
         <!-- song information -->
-        <text id="title" text="Connecting..." />
+        <label id="title" hint="Connecting..." textalign="center" />
     </row>
     <row weight="5">
         <!-- album art -->
