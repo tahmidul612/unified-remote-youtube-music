@@ -1,7 +1,7 @@
 -- Local Variables
 local host;
 local port;
-local access_token;
+local accessToken;
 local tid = -1;
 
 -- Events
@@ -45,7 +45,8 @@ function auth()
             });
             return false;
         else
-            access_token = libs.data.fromjson(resp.content).accessToken;
+            accessToken = libs.data.fromjson(resp.content).accessToken;
+            return true;
         end
     end);
 end
@@ -58,7 +59,7 @@ function request(url, data, method)
         method = method,
         url = url,
         headers = {
-            ["Authorization"] = "Bearer " .. access_token,
+            ["Authorization"] = "Bearer " .. accessToken,
             ["accept"] = "application/json"
         },
         mime = "application/json",
