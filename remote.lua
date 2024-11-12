@@ -19,10 +19,6 @@ events.blur = function()
     libs.timer.cancel(tid);
 end
 
-events.destroy = function()
-    -- unload some resources...
-end
-
 -- Web Request
 
 function auth()
