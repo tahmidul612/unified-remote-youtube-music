@@ -52,12 +52,15 @@ function auth()
     end);
 end
 
-function request(url, data)
+function request(url, data, method)
     if (access_token == nil) then
         auth();
     end
+    if (method == nil) then
+        method = "post";
+    end
     local req = {
-        method = "post",
+        method = method,
         url = url,
         headers = {
             ["Authorization"] = "Bearer " .. access_token,
@@ -75,7 +78,7 @@ function request(url, data)
     end
 end
 
-function send(cmd, key, val)
+function send(cmd, key, val, method)
     local url = "http://" .. host .. ":" .. port .. "/api/v1/";
     local data;
     if (cmd ~= nil) then
@@ -84,7 +87,7 @@ function send(cmd, key, val)
     if (key ~= nil) and (val ~= nil) then
         data = libs.data.tojson({ [key] = val });
     end
-    return request(url, data);
+    return request(url, data, method);
 end
 
 -- Actions
