@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout onlaunch="launch">
-    <row>
+    <row weight="1">
         <!-- song information -->
+        <text id="title" text="Connecting..." />
     </row>
-    <row>
+    <row weight="5">
+        <!-- album art -->
+        <image weight="wrap" id="cover" />
+    </row>
+    <row weight="1">
         <!-- previous | play/pause | next -->
         <button icon="previous" ontap="previous" />
         <button icon="playpause" ontap="playpause" />
         <button icon="next" ontap="next" />
     </row>
-    <row>
+    <row weight="1">
         <!-- like | dislike -->
         <button icon="thumbsup" ontap="like" />
         <button icon="thumbsdown" ontap="dislike" />
     </row>
-    <row>
+    <row weight="1">
         <!-- volume | mute -->
         <slider text="Volume" ondone="volume_change"/>
-        <button icon="vmute" ontap="mute" />
+        <button weight="wrap" icon="vmute" ontap="mute" />
     </row>
 </layout>
