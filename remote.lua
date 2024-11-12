@@ -131,27 +131,35 @@ end
 
 -- Actions
 
+--@help Authorize Youtube Music
 actions.authorize_tap = function()
     auth();
 end
+--@help Play or Pause
 actions.playpause = function()
     send("toggle-play");
 end
+--@help Play previous track
 actions.previous = function()
     send("previous");
 end
+--@help Play next track
 actions.next = function()
     send("next");
 end
+--@help Like current track
 actions.like = function()
     send("like");
 end
+--@help Dislike current track
 actions.dislike = function()
     send("dislike");
 end
+--@help Toggle mute
 actions.mute = function()
     send("toggle-mute");
 end
+--@help Volume slider
 actions.volume_change = function(vol)
     send("volume", "volume", vol);
 end
