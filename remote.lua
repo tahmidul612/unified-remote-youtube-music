@@ -10,7 +10,10 @@ events.focus = function()
     -- start some timers...
     host = settings.host;
     port = settings.port;
-    auth();
+    accessToken = settings.accessToken;
+    if (accessToken == nil) or (accessToken == "") then
+        auth();
+    end
     update_info();
 end
 
@@ -41,11 +44,16 @@ function auth()
                 text = "A connection to Youtube Music could not be established.\n\n" ..
                     "Please check that you are using the correct host and port in unified remote settings.\n" ..
                     "Also, check if the API server setting in the Youtube Music app is enabled.",
-                children = { { type = "button", text = "OK" } }
+                children = {
+                    { type = "button", text = "OK" }
+                }
             });
+            libs.server.update({ id = "authorize", visibility = "visible" });
             return false;
         else
             accessToken = libs.data.fromjson(resp.content).accessToken;
+            settings.accessToken = accessToken;
+            libs.server.update({ id = "authorize", visibility = "gone" });
             return true;
         end
     end);
@@ -67,9 +75,11 @@ function request(url, data, method)
     }
     local ok, resp = pcall(libs.http.request, req);
     if (ok and resp.status == 200) then
+        libs.server.update({ id = "authorize", visibility = "gone" });
         return resp;
     else
         libs.server.update({ id = "title", text = "[Not Connected]" });
+        libs.server.update({ id = "authorize", visibility = "visible" });
         return nil;
     end
 end
@@ -121,6 +131,9 @@ end
 
 -- Actions
 
+actions.authorize_tap = function()
+    auth();
+end
 actions.playpause = function()
     send("toggle-play");
 end
