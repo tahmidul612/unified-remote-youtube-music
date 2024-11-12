@@ -51,9 +51,6 @@ function auth()
 end
 
 function request(url, data, method)
-    if (access_token == nil) then
-        auth();
-    end
     if (method == nil) then
         method = "post";
     end
