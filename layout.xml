@@ -11,12 +11,12 @@
     </row>
     <row>
         <!-- like | dislike -->
-        <button icon="like" ontap="like" />
-        <button icon="dislike" ontap="dislike" />
+        <button icon="thumbsup" ontap="like" />
+        <button icon="thumbsdown" ontap="dislike" />
     </row>
     <row>
         <!-- volume | mute -->
-        <slider text="Volume" ondone="volume" progress="50" progressmax="100" />
-        <button icon="mute" ontap="mute" />
+        <slider text="Volume" ondone="volume_change"/>
+        <button icon="vmute" ontap="mute" />
     </row>
 </layout>
