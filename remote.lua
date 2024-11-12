@@ -22,7 +22,7 @@ end
 
 -- Web Request
 
-local function auth()
+function auth()
     local url = "http://" .. host .. ":" .. port .. "/auth/unified-remote";
     local headers = { ["accept"] = "application/json" };
 
@@ -51,7 +51,7 @@ local function auth()
     end);
 end
 
-local function request(url, data)
+function request(url, data)
     if (access_token == nil) then
         auth();
     end
@@ -74,7 +74,7 @@ local function request(url, data)
     end
 end
 
-local function send(cmd, key, val)
+function send(cmd, key, val)
     local url = "http://" .. host .. ":" .. port .. "/api/v1/";
     local data;
     if (cmd ~= nil) then
