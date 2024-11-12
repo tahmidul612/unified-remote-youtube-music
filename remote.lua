@@ -2,6 +2,7 @@
 local host;
 local port;
 local access_token;
+local tid = -1;
 
 -- Events
 
