@@ -106,7 +106,6 @@ function update_info()
             libs.server.update({ id = "album", text = info.album });
         end
         if (info.imageSrc ~= nil) then
-            print(info.imageSrc);
             local imgHttpUrl = string.gsub(info.imageSrc, "^https://", "http://");
             libs.server.update({ id = "cover", image = imgHttpUrl });
         end
