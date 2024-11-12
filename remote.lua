@@ -73,8 +73,8 @@ function request(url, data, method)
         mime = "application/json",
         content = data
     }
-    local ok, resp = pcall(libs.http.request, req);
-    if (ok and resp.status == 200) then
+    local resp = libs.http.request(req);
+    if (resp.status == 200 or resp.status == 204) then
         libs.server.update({ id = "authorize", visibility = "gone" });
         return resp;
     else
@@ -93,7 +93,8 @@ function send(cmd, key, val, method)
     if (key ~= nil) and (val ~= nil) then
         data = libs.data.tojson({ [key] = val });
     end
-    return request(url, data, method);
+    local resp = request(url, data, method);
+    return resp;
 end
 
 -- Status
@@ -106,15 +107,23 @@ function update_info()
     end
     if (resp ~= nil) then
         local info = libs.data.fromjson(resp.content);
+        local title;
         if (info.title ~= nil) then
-            libs.server.update({ id = "title", text = info.title });
+            title = info.title;
         end
         if (info.artist ~= nil) then
-            libs.server.update({ id = "artist", text = info.artist });
+            if (title ~= nil) then
+                title = title .. " - " .. info.artist;
+            else
+                title = info.artist;
+            end
         end
-        if (info.album ~= nil) then
-            libs.server.update({ id = "album", text = info.album });
+        if (title ~= nil) then
+            libs.server.update({ id = "title", text = title });
         end
+        -- if (info.album ~= nil) then
+        --     libs.server.update({ id = "album", text = info.album });
+        -- end
         if (info.imageSrc ~= nil) then
             local imgHttpUrl = string.gsub(info.imageSrc, "^https://", "http://");
             libs.server.update({ id = "cover", image = imgHttpUrl });
@@ -137,29 +146,29 @@ actions.authorize_tap = function()
 end
 --@help Play or Pause
 actions.playpause = function()
-    send("toggle-play");
+    pcall(send, "toggle-play");
 end
 --@help Play previous track
 actions.previous = function()
-    send("previous");
+    pcall(send, "previous");
 end
 --@help Play next track
 actions.next = function()
-    send("next");
+    pcall(send, "next");
 end
 --@help Like current track
 actions.like = function()
-    send("like");
+    pcall(send, "like");
 end
 --@help Dislike current track
 actions.dislike = function()
-    send("dislike");
+    pcall(send, "dislike");
 end
 --@help Toggle mute
 actions.mute = function()
-    send("toggle-mute");
+    pcall(send, "toggle-mute");
 end
 --@help Volume slider
 actions.volume_change = function(vol)
-    send("volume", "volume", vol);
+    pcall(send, "volume", "volume", vol);
 end
