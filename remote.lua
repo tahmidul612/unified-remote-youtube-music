@@ -3,6 +3,25 @@ local host;
 local port;
 local access_token;
 
+-- Events
+
+events.focus = function()
+    -- start some timers...
+    host = settings.host;
+    port = settings.port;
+    auth();
+end
+
+events.blur = function()
+    -- stop some timers...
+end
+
+events.destroy = function()
+    -- unload some resources...
+end
+
+-- Web Request
+
 local function auth()
     local url = "http://" .. host .. ":" .. port .. "/auth/unified-remote";
     local headers = { ["accept"] = "application/json" };
@@ -31,32 +50,6 @@ local function auth()
         end
     end);
 end
-
--- Events
-events.create = function()
-    host = settings.host;
-    port = settings.port;
-    auth();
-end
-
-events.focus = function()
-    -- start some timers...
-    host = settings.host;
-    port = settings.port;
-    auth();
-end
-
-events.blur = function()
-    -- stop some timers...
-end
-
-events.destroy = function()
-    -- unload some resources...
-end
-
-------------------------------------------------------------------------
--- Web Request
-------------------------------------------------------------------------
 
 local function request(url, data)
     if (access_token == nil) then
@@ -88,29 +81,29 @@ local function send(cmd, key, val)
         url = url .. cmd;
     end
     if (key ~= nil) and (val ~= nil) then
-        data = libs.data.tojson({[key] = val});
+        data = libs.data.tojson({ [key] = val });
     end
     return request(url, data);
 end
 
 -- Actions
 
-actions.playpause = function ()
+actions.playpause = function()
     send("toggle-play");
 end
-actions.previous = function ()
+actions.previous = function()
     send("previous");
 end
-actions.next = function ()
+actions.next = function()
     send("next");
 end
-actions.like = function ()
+actions.like = function()
     send("like");
 end
-actions.dislike = function ()
+actions.dislike = function()
     send("dislike");
 end
-actions.mute = function ()
+actions.mute = function()
     send("toggle-mute");
 end
 actions.volume_change = function(vol)
